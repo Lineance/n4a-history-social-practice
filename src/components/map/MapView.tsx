@@ -2,22 +2,55 @@ import { useEffect, useRef } from 'react'
 import {
   Map as MapLibreMap,
   type MapMouseEvent,
+  type StyleSpecification,
 } from 'maplibre-gl'
 import type { FeatureCollection } from 'geojson'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { venues, timeline } from '../../lib/content'
 import provinces from '../../data/geo/provinces.json'
 import { emptyLineCollection, venuesFeatureCollection } from '../../lib/geo'
+import { tiandituTk } from '../../config'
 import { useMapState } from '../../hooks/useMapState'
 import styles from './MapView.module.css'
-
-const OPENFREEMAP = 'https://tiles.openfreemap.org/styles/positron'
 
 /** 固定显示范围：四省（鄂/赣/皖/苏）区域，限制平移缩放不越界（范围外不加载、不显示） */
 const REGION_BOUNDS: [[number, number], [number, number]] = [
   [108, 24],
   [123, 36],
 ]
+
+const TIANDITU_HOSTS = ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7']
+
+/** 天地图 WMTS 底图（矢量 + 注记），本地 style 定义，不依赖外部 style JSON */
+function buildTiandituStyle(tk: string): StyleSpecification {
+  const wmts = (layer: string) =>
+    TIANDITU_HOSTS.map(
+      (h) =>
+        `https://${h}.tianditu.gov.cn/${layer}_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=${layer}&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tk}`,
+    )
+  return {
+    version: 8,
+    sources: {
+      'tianditu-base': {
+        type: 'raster',
+        tiles: wmts('vec'),
+        tileSize: 256,
+        attribution: '天地图',
+      },
+      'tianditu-label': {
+        type: 'raster',
+        tiles: wmts('cva'),
+        tileSize: 256,
+        attribution: '天地图',
+      },
+    },
+    layers: [
+      { id: 'bg', type: 'background', paint: { 'background-color': '#efe9dc' } },
+      { id: 'tianditu-base', type: 'raster', source: 'tianditu-base', minzoom: 0, maxzoom: 18 },
+      { id: 'tianditu-label', type: 'raster', source: 'tianditu-label', minzoom: 2, maxzoom: 18 },
+    ],
+  }
+}
 
 const VENUE_COLOR = '#b03a2e'
 const VENUE_ACTIVE = '#c9a227'
@@ -90,9 +123,12 @@ function MapView() {
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
+    if (!tiandituTk && import.meta.env.DEV) {
+      console.warn('[MapView] 未配置天地图 tk，底图不可用（本地用 .env.local，生产用 GitHub Secret TIANDITU_TK）')
+    }
     const mapInstance = new MapLibreMap({
       container: el,
-      style: OPENFREEMAP,
+      style: buildTiandituStyle(tiandituTk),
       center: [116.8, 30.8],
       zoom: 6.2,
       maxBounds: REGION_BOUNDS,

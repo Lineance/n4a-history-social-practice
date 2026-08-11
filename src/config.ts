@@ -6,3 +6,6 @@ export const giscus = {
   category: 'Announcements',
   categoryId: 'DIC_kwDOT1OnoM4DDJHS',
 }
+
+/** 天地图底图 key（客户端 key；生产由 GitHub Actions Secret 注入，见 .env.example） */
+export const tiandituTk = import.meta.env.VITE_TIANDITU_TK ?? ''

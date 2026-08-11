@@ -28,6 +28,7 @@ jobs:
         run: pnpm build
         env:
           VITE_BASE: /${{ github.event.repository.name }}/
+          VITE_TIANDITU_TK: ${{ secrets.TIANDITU_TK }}
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
