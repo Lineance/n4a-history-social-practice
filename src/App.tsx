@@ -8,6 +8,7 @@ import styles from './App.module.css'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
 const MapPage = lazy(() => import('./pages/MapPage'))
+const VenuesPage = lazy(() => import('./pages/VenuesPage'))
 const VenueDetailPage = lazy(() => import('./pages/VenueDetailPage'))
 const GalleryPage = lazy(() => import('./pages/GalleryPage'))
 const GuestbookPage = lazy(() => import('./pages/GuestbookPage'))
@@ -33,6 +34,7 @@ function AnimatedRoutes() {
         <Routes location={location}>
           <Route path="/" element={<Lazy><HomePage /></Lazy>} />
           <Route path="/map" element={<Lazy><MapPage /></Lazy>} />
+          <Route path="/venues" element={<Lazy><VenuesPage /></Lazy>} />
           <Route path="/venues/:id" element={<Lazy><VenueDetailPage /></Lazy>} />
           <Route path="/gallery" element={<Lazy><GalleryPage /></Lazy>} />
           <Route path="/guestbook" element={<Lazy><GuestbookPage /></Lazy>} />

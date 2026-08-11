@@ -4,6 +4,7 @@ import styles from './Navbar.module.css'
 const NAV_ITEMS = [
   { to: '/', label: '首页' },
   { to: '/map', label: '交互地图' },
+  { to: '/venues', label: '展馆介绍' },
   { to: '/gallery', label: '调研集锦' },
   { to: '/guestbook', label: '留言板' },
   { to: '/achievements', label: '成果' },

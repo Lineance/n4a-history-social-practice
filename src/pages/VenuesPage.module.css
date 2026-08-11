@@ -1,0 +1,25 @@
+.head {
+  text-align: center;
+  padding: 36px 0 8px;
+}
+
+.title {
+  font-size: 34px;
+  color: var(--c-deep);
+  letter-spacing: 3px;
+}
+
+.desc {
+  margin: 8px 0 0;
+  font-family: var(--font-kai);
+  font-size: 16px;
+  color: var(--c-text-light);
+}
+
+.grid {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-bottom: 20px;
+}
