@@ -18,6 +18,7 @@ function GiscusEmbed() {
     script.setAttribute('data-strict', '0')
     script.setAttribute('data-reactions-enabled', '1')
     script.setAttribute('data-emit-metadata', '0')
+    script.setAttribute('data-input-position', 'bottom')
     script.setAttribute('data-theme', 'light')
     script.setAttribute('data-lang', 'zh-CN')
     el.appendChild(script)
