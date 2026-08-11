@@ -123,8 +123,8 @@ function MapView() {
     const mapInstance = new MapLibreMap({
       container: el,
       style: buildTiandituStyle(tiandituTk),
-      center: [116.8, 30.8],
-      zoom: 6.2,
+      center: [104, 35],
+      zoom: 4.5,
       attributionControl: { compact: true },
     })
     setMap(mapInstance)
