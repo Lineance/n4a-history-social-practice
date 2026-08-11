@@ -138,7 +138,7 @@ function MapView() {
     const venue = vid ? venues.find((v) => v.id === vid) : undefined
     if (!venue) return
 
-    map.flyTo({ center: [venue.coords.lng, venue.coords.lat], zoom: 9, duration: 1600 })
+    map.flyTo({ center: [venue.coords.lng, venue.coords.lat], zoom: 11, duration: 1600 })
 
     if (map.getLayer('venues-circle')) {
       map.setPaintProperty('venues-circle', 'circle-radius', [

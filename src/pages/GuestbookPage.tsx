@@ -1,9 +1,10 @@
 import { giscus } from '../config'
+import MessageWall from '../components/guestbook/MessageWall'
 import GiscusEmbed from '../components/guestbook/GiscusEmbed'
 import styles from './GuestbookPage.module.css'
 
 function GuestbookPage() {
-  const ready = Boolean(giscus.repo)
+  const giscusReady = Boolean(giscus.repo)
 
   return (
     <div className="container">
@@ -13,13 +14,13 @@ function GuestbookPage() {
       </header>
 
       <div className={styles.body}>
-        {ready ? (
-          <GiscusEmbed />
-        ) : (
-          <div className={styles.placeholder}>
-            <p className={styles.phTitle}>留言功能筹备中</p>
-            <p>团队正在配置评论区（GitHub Discussions），敬请期待。</p>
-          </div>
+        <MessageWall />
+
+        {giscusReady && (
+          <section className={styles.giscus}>
+            <h2 className={styles.sectionTitle}>GitHub 评论区</h2>
+            <GiscusEmbed />
+          </section>
         )}
       </div>
     </div>

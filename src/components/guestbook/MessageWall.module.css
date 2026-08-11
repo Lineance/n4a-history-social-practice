@@ -1,0 +1,129 @@
+.wall {
+  margin-top: 24px;
+}
+
+.sectionTitle {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 12px;
+  font-size: 20px;
+  color: var(--c-deep);
+}
+.sectionTitle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  background: var(--c-gold);
+}
+
+.preset {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.presetItem {
+  margin: 0;
+  padding: 12px 14px;
+  font-family: var(--font-kai);
+  font-size: 14px;
+  color: var(--c-seal);
+  background: rgba(160, 32, 32, 0.06);
+  border-left: 3px solid rgba(160, 32, 32, 0.5);
+  border-radius: 4px;
+}
+
+.form {
+  margin-bottom: 16px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--c-text);
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  border-radius: 6px;
+  resize: vertical;
+}
+.textarea:focus {
+  outline: none;
+  border-color: var(--c-primary);
+}
+
+.formFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.count {
+  font-size: 12px;
+  color: var(--c-text-light);
+}
+
+.submit {
+  padding: 8px 22px;
+  font-family: var(--font-title);
+  font-size: 14px;
+  color: #f7f1e3;
+  background: var(--c-primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.submit:hover:not(:disabled) {
+  background: var(--c-deep);
+}
+.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.empty {
+  padding: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--c-text-light);
+  border: 1px dashed var(--c-line);
+  border-radius: 6px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.item {
+  padding: 12px 14px;
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+}
+
+.itemContent {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--c-text);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.itemTime {
+  font-size: 11px;
+  color: var(--c-text-light);
+}

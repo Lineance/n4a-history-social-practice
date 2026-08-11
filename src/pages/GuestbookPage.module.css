@@ -25,22 +25,25 @@
   border-radius: 12px;
 }
 
-.placeholder {
-  text-align: center;
-  padding: 48px 20px;
-  border: 1px dashed var(--c-line);
-  border-radius: 8px;
+.giscus {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--c-line);
 }
 
-.phTitle {
-  margin: 0 0 8px;
-  font-family: var(--font-title);
-  font-size: 18px;
+.sectionTitle {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 12px;
+  font-size: 20px;
   color: var(--c-deep);
 }
-
-.placeholder p:last-child {
-  margin: 0;
-  font-size: 14px;
-  color: var(--c-text-light);
+.sectionTitle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  background: var(--c-gold);
 }
