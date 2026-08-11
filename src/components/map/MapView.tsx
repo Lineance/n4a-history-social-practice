@@ -13,12 +13,6 @@ import { tiandituTk } from '../../config'
 import { useMapState } from '../../hooks/useMapState'
 import styles from './MapView.module.css'
 
-/** 固定显示范围：四省（鄂/赣/皖/苏）区域，限制平移缩放不越界（范围外不加载、不显示） */
-const REGION_BOUNDS: [[number, number], [number, number]] = [
-  [108, 24],
-  [123, 36],
-]
-
 const TIANDITU_HOSTS = ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7']
 
 /** 天地图 WMTS 底图（矢量 + 注记），本地 style 定义，不依赖外部 style JSON */
@@ -131,7 +125,6 @@ function MapView() {
       style: buildTiandituStyle(tiandituTk),
       center: [116.8, 30.8],
       zoom: 6.2,
-      maxBounds: REGION_BOUNDS,
       attributionControl: { compact: true },
     })
     setMap(mapInstance)
