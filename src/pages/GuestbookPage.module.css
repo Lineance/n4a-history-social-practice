@@ -1,0 +1,46 @@
+.head {
+  text-align: center;
+  padding: 36px 0 8px;
+}
+
+.title {
+  font-size: 34px;
+  color: var(--c-deep);
+  letter-spacing: 3px;
+}
+
+.desc {
+  margin: 8px 0 0;
+  font-family: var(--font-kai);
+  font-size: 16px;
+  color: var(--c-text-light);
+}
+
+.body {
+  max-width: 760px;
+  margin: 28px auto 0;
+  padding: 24px;
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 48px 20px;
+  border: 1px dashed var(--c-line);
+  border-radius: 8px;
+}
+
+.phTitle {
+  margin: 0 0 8px;
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--c-deep);
+}
+
+.placeholder p:last-child {
+  margin: 0;
+  font-size: 14px;
+  color: var(--c-text-light);
+}
