@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { to: '/venues', label: '展馆介绍' },
   { to: '/gallery', label: '调研集锦' },
   { to: '/guestbook', label: '留言板' },
-  { to: '/achievements', label: '成果' },
+  { to: '/achievements', label: '成果展示' },
 ]
 
 function Navbar() {
