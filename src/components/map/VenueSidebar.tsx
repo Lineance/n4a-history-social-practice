@@ -6,12 +6,16 @@ import styles from './VenueSidebar.module.css'
 function VenueSidebar() {
   const { periodKey, setPeriod, setHovered } = useMapState()
   const period = timeline.find((t) => t.key === periodKey)
+  const venue = period ? venues.find((v) => v.id === period.venueIds[0]) : undefined
 
   return (
     <aside className={styles.sidebar}>
       <div className={styles.summary}>
-        {period ? (
+        {period && venue ? (
           <>
+            {venue.cover && (
+              <img src={venue.cover} alt={venue.name} className={styles.summaryCover} loading="lazy" />
+            )}
             <h3 className={styles.periodTitle}>
               {period.title} · <span className={styles.subtitle}>{period.subtitle}</span>
             </h3>
