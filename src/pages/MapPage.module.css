@@ -1,0 +1,22 @@
+.page {
+  height: calc(100vh - var(--nav-h));
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    'map sidebar'
+    'slider slider';
+  gap: 0;
+}
+
+.mapArea {
+  position: relative;
+  grid-area: map;
+  min-width: 0;
+  overflow: hidden;
+  background: #ece3d0;
+}
+
+.sidebarArea {
+  grid-area: sidebar;
+}

@@ -1,0 +1,50 @@
+.toggle {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 30;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: var(--font-title);
+  color: #f7f1e3;
+  background: rgba(123, 36, 28, 0.88);
+  border: 1px solid rgba(201, 162, 39, 0.5);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.toggle:hover {
+  background: rgba(90, 26, 20, 0.96);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.item {
+  position: absolute;
+  left: 0;
+  white-space: nowrap;
+  font-size: 15px;
+  font-family: var(--font-kai);
+  color: rgba(255, 250, 240, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.28);
+  padding: 3px 14px;
+  border-radius: 999px;
+  transform: translateX(110vw);
+  animation: danmaku linear infinite;
+}
+
+@keyframes danmaku {
+  from {
+    transform: translateX(110vw);
+  }
+  to {
+    transform: translateX(-40vw);
+  }
+}

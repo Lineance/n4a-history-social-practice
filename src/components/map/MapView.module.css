@@ -1,0 +1,9 @@
+.container {
+  position: absolute;
+  inset: 0;
+}
+
+.container :global(.maplibregl-ctrl-attrib) {
+  font-size: 11px;
+  background: rgba(247, 241, 227, 0.7);
+}
