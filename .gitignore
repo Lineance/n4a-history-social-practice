@@ -35,3 +35,6 @@ coverage
 *.ai
 队旗.svg
 队徽.svg
+
+# 归档包（不入 git）
+*.zip

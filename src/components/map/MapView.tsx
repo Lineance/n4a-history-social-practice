@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import {
   Map as MapLibreMap,
-  LngLatBounds,
   type MapMouseEvent,
 } from 'maplibre-gl'
 import type { FeatureCollection } from 'geojson'
@@ -13,6 +12,12 @@ import { useMapState } from '../../hooks/useMapState'
 import styles from './MapView.module.css'
 
 const OPENFREEMAP = 'https://tiles.openfreemap.org/styles/positron'
+
+/** 固定显示范围：四省（鄂/赣/皖/苏）区域，限制平移缩放不越界（范围外不加载、不显示） */
+const REGION_BOUNDS: [[number, number], [number, number]] = [
+  [108, 24],
+  [123, 36],
+]
 
 const VENUE_COLOR = '#b03a2e'
 const VENUE_ACTIVE = '#c9a227'
@@ -88,8 +93,9 @@ function MapView() {
     const mapInstance = new MapLibreMap({
       container: el,
       style: OPENFREEMAP,
-      center: [117, 31],
-      zoom: 5,
+      center: [116.8, 30.8],
+      zoom: 6.2,
+      maxBounds: REGION_BOUNDS,
       attributionControl: { compact: true },
     })
     setMap(mapInstance)
@@ -97,10 +103,6 @@ function MapView() {
     mapInstance.on('load', () => {
       addSourcesAndLayers(mapInstance)
       setMapReady(true)
-
-      const bounds = new LngLatBounds()
-      venues.forEach((v) => bounds.extend([v.coords.lng, v.coords.lat]))
-      mapInstance.fitBounds(bounds, { padding: 60, duration: 900 })
 
       const onMove = (e: MapMouseEvent) => {
         const feats = mapInstance.queryRenderedFeatures(e.point, { layers: ['venues-circle'] })
