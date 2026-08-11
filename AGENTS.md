@@ -31,28 +31,24 @@ website/
 
 ## 命令
 
-> 注意：Vite 项目**尚未脚手架**，`website/` 下暂无 `package.json`。以下为计划的命令，脚手架（`npm create vite@latest . -- --template react-ts`）后生效。所有命令在 `website/` 目录执行。
+> 项目已脚手架（Vite + React + TS），使用 **pnpm**。所有命令在 `website/` 目录执行。
 
 ```bash
-npm install              # 安装依赖（含 react-router-dom, framer-motion, yaml, maplibre-gl, yet-another-react-lightbox, @fontsource/*）
-npm run dev              # 开发服务器（默认 http://localhost:5173）
-npm run build            # 生产构建：tsc -b && vite build
-npm run preview          # 预览构建产物
-npm run lint             # ESLint（Vite react-ts 模板自带）
-npm run typecheck        # 类型检查：tsc --noEmit
+pnpm install              # 安装依赖（react-router-dom, framer-motion, yaml, maplibre-gl, yet-another-react-lightbox, @fontsource/*, vitest）
+pnpm dev                  # 开发服务器（默认 http://localhost:5173）
+pnpm build                # 生产构建：tsc -b && vite build
+pnpm preview              # 预览构建产物
+pnpm lint                 # oxlint
+pnpm typecheck            # 类型检查：tsc -b
 ```
 
-### 测试
+### 测试（Vitest 已配置）
 
-- **当前未配置测试框架**。计划引入 Vitest。引入后：
-  - `npm test` — 全量测试
-  - 运行单个测试文件：`npx vitest run src/lib/content.test.ts`
-  - 监听模式：`npx vitest src/lib/content.test.ts`
-  - 只跑某个用例（-t 过滤）：`npx vitest run src/lib/content.test.ts -t "venues"`
-- 建议为 `src/lib/content.ts`（frontmatter 解析）与数据校验写测试：
-  - 解析层：给定合法/非法 frontmatter，断言返回结构或抛错
-  - 数据校验：遍历 `content/**/*.md`，断言 id 唯一、venueId 存在、图片路径真实、坐标在中国境内
-- 引入 Vitest 依赖：`npm install -D vitest`，并在 `package.json` scripts 加 `"test": "vitest run"`
+- `pnpm test` — 全量测试
+- 运行单个测试文件：`npx vitest run src/lib/content.test.ts`
+- 监听模式：`npx vitest src/lib/content.test.ts`
+- 只跑某个用例（-t 过滤）：`npx vitest run src/lib/content.test.ts -t "venues"`
+- 现有测试覆盖 `src/lib/content.ts`（frontmatter 解析抛错 + 数据完整性校验）
 
 ## 内容编辑规范（content/ 是数据，不是代码）
 
