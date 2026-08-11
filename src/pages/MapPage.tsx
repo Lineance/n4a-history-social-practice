@@ -6,6 +6,7 @@ import TimeSlider from '../components/map/TimeSlider'
 import VenueSidebar from '../components/map/VenueSidebar'
 import FlyLines from '../components/map/FlyLines'
 import DanmakuLayer from '../components/map/DanmakuLayer'
+import VenueNavButtons from '../components/map/VenueNavButtons'
 import styles from './MapPage.module.css'
 
 /** 从 hash 中解析 ?period= 参数（HashRouter 下比 useSearchParams 更可靠） */
@@ -24,6 +25,7 @@ function MapLayout() {
         <FlyLines />
         <InfoCard />
         <DanmakuLayer />
+        <VenueNavButtons />
       </div>
       <VenueSidebar />
       <TimeSlider />
