@@ -1,0 +1,24 @@
+/* 主题变量 —— 见 设计方向.md（红色文献 · 铁军档案） */
+:root {
+  /* 色彩 */
+  --c-primary: #b03a2e;
+  --c-deep: #7b241c;
+  --c-seal: #a02020;
+  --c-gold: #c9a227;
+  --c-bg: #f7f1e3;
+  --c-paper: #fbf6ea;
+  --c-text: #2c2c2c;
+  --c-text-light: #6b6b6b;
+  --c-line: rgba(123, 36, 28, 0.25);
+
+  /* 字体 */
+  --font-title: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-body: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --font-kai: 'LXGW WenKai', 'Kaiti SC', 'KaiTi', serif;
+
+  /* 尺寸 */
+  --gap: 16px;
+  --radius: 8px;
+  --nav-h: 64px;
+  --content-w: 1040px;
+}
