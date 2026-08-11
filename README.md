@@ -13,7 +13,7 @@
 | 地图 | MapLibre GL + OpenFreeMap 矢量瓦片（真实地图，可缩放至街道级） |
 | 动画 | Framer Motion + MapLibre 图层动画 |
 | 样式 | CSS Modules（红色文献主题，无 Tailwind） |
-| 内容 | Markdown + frontmatter（`content/`），gray-matter 解析 |
+| 内容 | Markdown + frontmatter（`content/`），yaml 解析 |
 | 灯箱 | yet-another-react-lightbox |
 | 留言板 | Giscus（GitHub Discussions，未配置前占位） |
 | 测试 | Vitest |

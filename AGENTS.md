@@ -34,7 +34,7 @@ website/
 > 注意：Vite 项目**尚未脚手架**，`website/` 下暂无 `package.json`。以下为计划的命令，脚手架（`npm create vite@latest . -- --template react-ts`）后生效。所有命令在 `website/` 目录执行。
 
 ```bash
-npm install              # 安装依赖（含 react-router-dom, framer-motion, gray-matter, maplibre-gl, yet-another-react-lightbox, @fontsource/*）
+npm install              # 安装依赖（含 react-router-dom, framer-motion, yaml, maplibre-gl, yet-another-react-lightbox, @fontsource/*）
 npm run dev              # 开发服务器（默认 http://localhost:5173）
 npm run build            # 生产构建：tsc -b && vite build
 npm run preview          # 预览构建产物
@@ -76,7 +76,7 @@ npm run typecheck        # 类型检查：tsc --noEmit
 ### TypeScript
 - `strict` 模式开启；禁止 `any`（明确需要时 `unknown` + 收窄）
 - 内容 schema 接口集中在 `src/types/content.ts`，解析函数在 `src/lib/content.ts`
-- 解析 frontmatter 用 `gray-matter`，加载用 `import.meta.glob(..., { eager: true })`
+- 解析 frontmatter 用 `yaml`（浏览器安全、无 buffer 依赖），加载用 `import.meta.glob(..., { eager: true })`
 - 接口/类型命名：`Venue`、`TimelinePeriod`、`HistoricalEvent`、`VisitRecord`（见数据模型）
 - 可空字段用 `?`（如 `website?: string`），不用 `| null` 泛滥
 

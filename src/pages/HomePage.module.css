@@ -1,0 +1,121 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #5a1a14 0%, #7b241c 45%, #a03a2c 100%);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(600px 360px at 18% 30%, rgba(201, 162, 39, 0.16), transparent 70%),
+    radial-gradient(700px 420px at 85% 72%, rgba(255, 255, 255, 0.06), transparent 70%);
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  max-width: var(--content-w);
+  padding: 0 var(--gap);
+}
+
+.flag {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  width: 250px;
+  height: 250px;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
+}
+
+.text {
+  padding-top: 26px; /* 标题略高于队徽，打破居中 */
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 64px;
+  letter-spacing: 4px;
+  color: #f7f1e3;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+.title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 96px;
+  height: 3px;
+  background: var(--c-gold);
+}
+
+.subtitle {
+  margin: 28px 0 0;
+  font-family: var(--font-kai);
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: rgba(247, 241, 227, 0.92);
+}
+
+.signature {
+  margin: 14px 0 0;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: rgba(247, 241, 227, 0.6);
+}
+
+.cta {
+  margin-top: 36px;
+  padding: 14px 34px;
+  font-family: var(--font-title);
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #f7f1e3;
+  background: transparent;
+  border: 1px solid var(--c-gold);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+}
+.cta:hover {
+  background: var(--c-gold);
+  color: #5a1a14;
+  box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4);
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(247, 241, 227, 0.7);
+  font-size: 22px;
+  animation: floatDown 2s ease-in-out infinite;
+}
+
+@keyframes floatDown {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, 8px);
+    opacity: 1;
+  }
+}

@@ -1,4 +1,4 @@
-import matter from 'gray-matter'
+import { parse as parseYaml } from 'yaml'
 import type {
   HistoricalEvent,
   PeriodKey,
@@ -38,6 +38,22 @@ const testimonialFile = import.meta.glob<string>('/content/testimonials.md', {
   query: '?raw',
   import: 'default',
 })
+
+/* ------------------------------------------------------------------ */
+/* frontmatter 解析（yaml 包，浏览器安全，无 buffer 依赖）               */
+/* ------------------------------------------------------------------ */
+
+function parseFrontmatter(raw: string, file: string): { data: Record<string, unknown>; content: string } {
+  const m = raw.match(/^---[ \t]*\r?\n([\s\S]*?)\r?\n?---[ \t]*\r?\n?/)
+  if (!m) {
+    throw new Error(`${file}: 缺少 YAML frontmatter（文件应以 --- 开头）`)
+  }
+  const parsed = parseYaml(m[1])
+  if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new Error(`${file}: frontmatter 应为 YAML 映射对象`)
+  }
+  return { data: parsed as Record<string, unknown>, content: raw.slice(m[0].length) }
+}
 
 /* ------------------------------------------------------------------ */
 /* frontmatter 校验辅助（字段缺失/类型错误在解析层抛错）                 */
@@ -92,7 +108,7 @@ function requirePeriodKey(v: unknown, file: string): PeriodKey {
 /* ------------------------------------------------------------------ */
 
 export function parseVenue(raw: string, file: string): Venue {
-  const { data, content } = matter(raw)
+  const { data, content } = parseFrontmatter(raw, file)
   const images: VenueImage[] = Array.isArray(data.images)
     ? (data.images as Record<string, unknown>[]).map((im, i) => ({
         src: requireString(im.src, `images[${i}].src`, file),
@@ -128,7 +144,7 @@ export function parseVenue(raw: string, file: string): Venue {
 }
 
 export function parseTimelinePeriod(raw: string, file: string): TimelinePeriod {
-  const { data } = matter(raw)
+  const { data } = parseFrontmatter(raw, file)
   const dates = data.dates as Record<string, unknown> | undefined
   return {
     key: requirePeriodKey(data.key, file),
@@ -146,7 +162,7 @@ export function parseTimelinePeriod(raw: string, file: string): TimelinePeriod {
 }
 
 export function parseEvents(raw: string, file: string): HistoricalEvent[] {
-  const { data, content } = matter(raw)
+  const { data, content } = parseFrontmatter(raw, file)
   const venueId = requireString(data.venueId, 'venueId', file)
   const sections = content.split(/^## /m).filter((s) => s.trim().length > 0)
   if (sections.length === 0) throw new Error(`${file}: 无事件小节`)
@@ -168,7 +184,7 @@ export function parseEvents(raw: string, file: string): HistoricalEvent[] {
 }
 
 export function parseVisit(raw: string, file: string): VisitRecord {
-  const { data, content } = matter(raw)
+  const { data, content } = parseFrontmatter(raw, file)
   return {
     id: requireString(data.id, 'id', file),
     venueId: requireString(data.venueId, 'venueId', file),
@@ -212,7 +228,7 @@ export const visits: VisitRecord[] = Object.entries(visitFiles)
 export const testimonialTexts: string[] = (() => {
   const first = Object.values(testimonialFile)[0]
   if (!first) return []
-  const { data } = matter(first)
+  const { data } = parseFrontmatter(first, '/content/testimonials.md')
   return requireStringArray(data.texts, 'texts', '/content/testimonials.md')
 })()
 
