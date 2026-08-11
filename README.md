@@ -26,14 +26,14 @@
 ```
 AGENTS.md              代理工作约定（命令/代码风格/内容规范，先读）
 SKILL.md               前端设计技能
-实施指南.md            给开发 agent 的具体实现步骤
 content/               网站内容数据（Markdown + frontmatter）
   venues/  timeline/  events/  visits/  testimonials.md
 public/                静态资源（images/venues/、favicon 系列、brand/duihui.png）
 src/data/geo/          地图几何数据：provinces.json（四省省界）、china.json
 src/types/ src/lib/    内容类型与解析层
-模块文档/              逐模块实现细节（01-07）
-方案/需求/数据模型/技术方案/设计方向.md
+docs/                  规划文档
+  模块文档/            逐模块实现细节（01-07）
+  方案/需求/数据模型/技术方案/设计方向/实施指南.md
 ```
 
 ## 快速开始
@@ -44,7 +44,7 @@ pnpm dev          # 开发服务器 http://localhost:5173
 pnpm build        # 生产构建：tsc -b && vite build
 pnpm preview      # 预览构建产物
 pnpm lint         # oxlint
-pnpm typecheck    # tsc --noEmit
+pnpm typecheck    # tsc -b
 pnpm test         # Vitest（content 解析层单测）
 ```
 
@@ -52,19 +52,19 @@ pnpm test         # Vitest（content 解析层单测）
 
 | 文档 | 内容 |
 |------|------|
-| `方案.md` | 总体方案、MVP 定稿、实施顺序、验收标准 |
-| `需求文档.md` | 逐页面功能与交互需求 |
-| `数据模型.md` | content 数据 schema、场馆/事件/时间线数据清单 |
-| `技术方案.md` | 工程化细节、MapLibre 实现要点、部署 |
-| `设计方向.md` | 视觉规范（红色文献 · 铁军档案） |
-| `模块文档/` | 01 全局骨架 / 02 首页 / 03 地图 / 04 详情 / 05 集锦 / 06 留言弹幕 / 07 成果 |
-| `实施指南.md` | 给开发 agent 的具体实现步骤（首选阅读） |
+| `docs/方案.md` | 总体方案、MVP 定稿、实施顺序、验收标准 |
+| `docs/需求文档.md` | 逐页面功能与交互需求 |
+| `docs/数据模型.md` | content 数据 schema、场馆/事件/时间线数据清单 |
+| `docs/技术方案.md` | 工程化细节、MapLibre 实现要点、部署 |
+| `docs/设计方向.md` | 视觉规范（红色文献 · 铁军档案） |
+| `docs/模块文档/` | 01 全局骨架 / 02 首页 / 03 地图 / 04 详情 / 05 集锦 / 06 留言弹幕 / 07 成果 |
+| `docs/实施指南.md` | 给开发 agent 的具体实现步骤（首选阅读） |
 
 ## 当前状态
 
 - ✅ 规划文档齐备、内容数据就绪、素材处理完成、git 仓库已建
 - ✅ 前端脚手架完成（里程碑 0）
-- 🚧 开发进行中，见 `实施指南.md` 里程碑
+- 🚧 开发进行中，见 `docs/实施指南.md` 里程碑
 - ⏳ 团队待办见 `../todo.md`（父目录）
 
 > 本项目为团队社会实践成果展示，仅供学习与展示使用。

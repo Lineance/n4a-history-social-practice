@@ -8,10 +8,10 @@
 - 形态：纯静态站（Vite + React 18 + TypeScript），部署 GitHub Pages，无后端
 - 地图：MapLibre GL + OpenFreeMap 矢量瓦片（真实地图，可缩放至街道级）
 - 留言板：Giscus（需 GitHub 仓库 + Discussions，未配置前用占位）
-- 设计方向：**"红色文献·铁军档案"**，详见 `website/设计方向.md`，涉及页面视觉/动效时必读
+- 设计方向：**"红色文献·铁军档案"**，详见 `docs/设计方向.md`，涉及页面视觉/动效时必读
 - 前端设计技能：仓库根 `SKILL.md`（frontend-design），写前端 UI 时遵循其美学准则
 - MVP 范围：仅桌面版（无响应式）；首页仅 Hero 开场；集锦页仅照片墙；弹幕用预置留言
-- 配套规划文档：`website/方案.md`、`需求文档.md`、`数据模型.md`、`技术方案.md`、`模块文档/`
+- 配套规划文档：`docs/方案.md`、`需求文档.md`、`数据模型.md`、`技术方案.md`、`模块文档/`
 
 ## 目录结构
 
@@ -25,8 +25,8 @@ website/
     venues/   timeline/   events/   visits/    testimonials.md
   public/             静态资源：images/venues/<id>/（WebP）、favicon 系列、brand/duihui.png
   src/data/geo/       provinces.json（四省省界）、china.json
-  各 *.md             规划文档（方案/需求/数据模型/技术方案/设计方向）
-  模块文档/           逐模块实现细节
+  docs/               规划文档（方案/需求/数据模型/技术方案/设计方向/实施指南）
+   模块文档/          逐模块实现细节
 ```
 
 ## 命令
@@ -53,7 +53,7 @@ pnpm typecheck            # 类型检查：tsc -b
 ## 内容编辑规范（content/ 是数据，不是代码）
 
 - 所有展示内容在 `website/content/**/*.md`，**禁止硬编码进组件**
-- 每个 `.md` = frontmatter（YAML）+ 正文；字段 schema 严格按 `website/数据模型.md`
+- 每个 `.md` = frontmatter（YAML）+ 正文；字段 schema 严格按 `docs/数据模型.md`
 - 文件命名统一 `01-` 编号前缀（如 `01-hankou.md`），与 `displayOrder` 一致；一馆一文件
 - `events/*.md` 正文按 `## 日期 · 标题` 分区，每个二级标题 = 一个事件
 - 坐标 `coords` 须为**街道级核实值**（高德/OSM 检索），未核实的在 `todo.md` 标注
@@ -87,7 +87,7 @@ pnpm typecheck            # 类型检查：tsc -b
 ### 样式（CSS Modules）
 - 每个组件一个 `*.module.css`；主题变量集中在 `styles/theme.css` 的 `:root`
 - 禁止内联样式（动态计算值除外）；不使用 Tailwind
-- 色板/字体/质感遵循 `website/设计方向.md`（红色文献风格：纸张纹理、印章、思源宋/楷/黑）
+- 色板/字体/质感遵循 `docs/设计方向.md`（红色文献风格：纸张纹理、印章、思源宋/楷/黑）
 - 关键动效用 Framer Motion；纯 CSS 动画用 `@keyframes` 集中于 module 文件内
 
 ### 命名
@@ -122,8 +122,8 @@ pnpm typecheck            # 类型检查：tsc -b
 
 ## 文档与提交
 
-- 规划文档改动需保持四份主文档（方案/需求/数据模型/技术方案）+ 模块文档一致
-- 涉及页面视觉/动效的实现，先对照 `website/设计方向.md` 与仓库根 `SKILL.md` 再动手
+- 规划文档改动需保持四份主文档（docs/ 方案/需求/数据模型/技术方案）+ 模块文档一致
+- 涉及页面视觉/动效的实现，先对照 `docs/设计方向.md` 与仓库根 `SKILL.md` 再动手
 - 提交信息规范：`feat:` / `fix:` / `chore:` / `docs:` 前缀
 - 大文件（`ppt初稿.pptx`、14MB 队旗源 SVG 等）不入 git；建议加 `.gitignore`（含 `node_modules/`、`dist/`、`*.pptx`、`立项答辩/` 大文件）
 - `todo.md` 中团队手写备注（如"找官方照片"）是团队待办，**未经明确指示不要替团队执行**
