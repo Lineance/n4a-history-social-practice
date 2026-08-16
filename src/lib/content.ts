@@ -1,4 +1,5 @@
 import { parse as parseYaml } from 'yaml'
+import { assetUrl } from './assets'
 import type {
   AchievementLink,
   AchievementSection,
@@ -118,7 +119,7 @@ export function parseVenue(raw: string, file: string): Venue {
   const { data, content } = parseFrontmatter(raw, file)
   const images: VenueImage[] = Array.isArray(data.images)
     ? (data.images as Record<string, unknown>[]).map((im, i) => ({
-        src: requireString(im.src, `images[${i}].src`, file),
+        src: assetUrl(requireString(im.src, `images[${i}].src`, file)),
         caption: optionalString(im.caption, file),
         source: requireString(im.source, `images[${i}].source`, file) as VenueImage['source'],
       }))
@@ -127,7 +128,7 @@ export function parseVenue(raw: string, file: string): Venue {
   const dates = data.dates as Record<string, unknown> | undefined
   return {
     id: requireString(data.id, 'id', file),
-    cover: requireString(data.cover, 'cover', file),
+    cover: assetUrl(requireString(data.cover, 'cover', file)),
     name: requireString(data.name, 'name', file),
     shortName: requireString(data.shortName, 'shortName', file),
     city: requireString(data.city, 'city', file),
@@ -197,7 +198,7 @@ export function parseVisit(raw: string, file: string): VisitRecord {
     venueId: requireString(data.venueId, 'venueId', file),
     date: requireString(data.date, 'date', file),
     location: requireString(data.location, 'location', file),
-    images: requireStringArray(data.images, 'images', file),
+    images: requireStringArray(data.images, 'images', file).map(assetUrl),
     notes: content.trim(),
   }
 }

@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { assetUrl } from '../lib/assets'
 import styles from './Navbar.module.css'
 
 const NAV_ITEMS = [
@@ -15,7 +16,7 @@ function Navbar() {
     <header className={styles.navbar}>
       <div className={styles.inner}>
         <NavLink to="/" className={styles.brand}>
-          <img src="/brand/duihui.png" alt="队徽" className={styles.logo} />
+          <img src={assetUrl('/brand/duihui.png')} alt="队徽" className={styles.logo} />
           <span className={styles.brandText}>铁军精神 · 驻地变迁</span>
         </NavLink>
         <nav className={styles.links}>

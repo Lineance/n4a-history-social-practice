@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { assetUrl } from '../lib/assets'
 import styles from './HomePage.module.css'
 
 const STAGGER = {
@@ -24,7 +25,7 @@ function HomePage() {
           initial="hidden"
           animate="show"
         >
-          <img src="/brand/duihui.png" alt="实践团队徽" className={styles.logo} />
+          <img src={assetUrl('/brand/duihui.png')} alt="实践团队徽" className={styles.logo} />
         </motion.div>
 
         <div className={styles.text}>
