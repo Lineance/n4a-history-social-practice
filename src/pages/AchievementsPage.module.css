@@ -43,6 +43,43 @@
   color: var(--c-text-light);
 }
 
+.links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  text-decoration: none;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.link:hover {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 1px var(--c-primary);
+}
+
+.linkTitle {
+  font-size: 15px;
+  color: var(--c-deep);
+}
+
+.linkSource {
+  font-size: 12px;
+  font-family: var(--font-kai);
+  color: var(--c-text-light);
+}
+
 .placeholder {
   padding: 18px;
   text-align: center;

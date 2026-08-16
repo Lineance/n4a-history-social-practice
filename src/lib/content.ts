@@ -1,5 +1,7 @@
 import { parse as parseYaml } from 'yaml'
 import type {
+  AchievementLink,
+  AchievementSection,
   HistoricalEvent,
   PeriodKey,
   TimelinePeriod,
@@ -34,6 +36,11 @@ const visitFiles = import.meta.glob<string>('/content/visits/*.md', {
   import: 'default',
 })
 const testimonialFile = import.meta.glob<string>('/content/testimonials.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+})
+const achievementFile = import.meta.glob<string>('/content/achievements.md', {
   eager: true,
   query: '?raw',
   import: 'default',
@@ -195,6 +202,32 @@ export function parseVisit(raw: string, file: string): VisitRecord {
   }
 }
 
+export function parseAchievements(raw: string, file: string): AchievementSection[] {
+  const { data } = parseFrontmatter(raw, file)
+  if (!Array.isArray(data.sections)) {
+    throw new Error(`${file}: 字段 sections 缺失或非数组`)
+  }
+  return (data.sections as Record<string, unknown>[]).map((s, i) => {
+    const prefix = `sections[${i}]`
+    const links = Array.isArray(s.links) ? (s.links as Record<string, unknown>[]).map((l, j) => {
+      const linkPrefix = `${prefix}.links[${j}]`
+      const link: AchievementLink = {
+        title: requireString(l.title, `${linkPrefix}.title`, file),
+        url: requireString(l.url, `${linkPrefix}.url`, file),
+      }
+      const source = optionalString(l.source, file)
+      if (source !== undefined) link.source = source
+      return link
+    }) : []
+    return {
+      title: requireString(s.title, `${prefix}.title`, file),
+      desc: requireString(s.desc, `${prefix}.desc`, file),
+      ready: requireBoolean(s.ready, `${prefix}.ready`, file),
+      links,
+    }
+  })
+}
+
 /* ------------------------------------------------------------------ */
 /* 导出数据（应用层只读使用）                                          */
 /* ------------------------------------------------------------------ */
@@ -230,6 +263,12 @@ export const testimonialTexts: string[] = (() => {
   if (!first) return []
   const { data } = parseFrontmatter(first, '/content/testimonials.md')
   return requireStringArray(data.texts, 'texts', '/content/testimonials.md')
+})()
+
+export const achievements: AchievementSection[] = (() => {
+  const first = Object.values(achievementFile)[0]
+  if (!first) return []
+  return parseAchievements(first, '/content/achievements.md')
 })()
 
 /* ------------------------------------------------------------------ */

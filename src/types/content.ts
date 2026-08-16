@@ -82,3 +82,16 @@ export interface VisitRecord {
   images: string[]
   notes: string
 }
+
+export interface AchievementLink {
+  title: string
+  url: string
+  source?: string
+}
+
+export interface AchievementSection {
+  title: string
+  desc: string
+  ready: boolean
+  links: AchievementLink[]
+}

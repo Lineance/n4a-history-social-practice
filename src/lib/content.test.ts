@@ -3,7 +3,9 @@ import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
+  achievements,
   eventsByVenue,
+  parseAchievements,
   parseEvents,
   parseTimelinePeriod,
   parseVenue,
@@ -95,6 +97,44 @@ describe('content 解析层', () => {
     )
     expect(v.id).toBe('x')
   })
+
+  it('achievements 解析出分区与链接', () => {
+    const secs = parseAchievements(
+      `---
+sections:
+  - title: 实践记录
+    desc: 调研图文
+    ready: true
+    links:
+      - title: 从汉口到南昌
+        url: https://example.com/a
+        source: 微信公众号
+  - title: 调研报告
+    desc: 整理中
+    ready: false
+---\n`,
+      'a.md',
+    )
+    expect(secs).toHaveLength(2)
+    expect(secs[0].title).toBe('实践记录')
+    expect(secs[0].links).toHaveLength(1)
+    expect(secs[0].links[0].title).toBe('从汉口到南昌')
+    expect(secs[0].links[0].source).toBe('微信公众号')
+    expect(secs[1].ready).toBe(false)
+    expect(secs[1].links).toHaveLength(0)
+  })
+
+  it('achievements 链接缺 url 抛错', () => {
+    const bad = `---
+sections:
+  - title: 实践记录
+    desc: 调研图文
+    ready: true
+    links:
+      - title: 缺 url
+---\n`
+    expect(() => parseAchievements(bad, 'a.md')).toThrow()
+  })
 })
 
 describe('content 数据完整性', () => {
@@ -171,5 +211,19 @@ describe('content 数据完整性', () => {
     for (const t of testimonialTexts) {
       expect(t.length).toBeGreaterThan(0)
     }
+  })
+
+  it('成果页分区存在，媒体链接为 https 外链', () => {
+    expect(achievements.length).toBeGreaterThan(0)
+    for (const s of achievements) {
+      expect(s.title.length).toBeGreaterThan(0)
+      expect(s.desc.length).toBeGreaterThan(0)
+      for (const link of s.links) {
+        expect(link.title.length).toBeGreaterThan(0)
+        expect(link.url.startsWith('https://')).toBe(true)
+      }
+    }
+    const readyTitles = new Set(achievements.filter((s) => s.ready).map((s) => s.title))
+    expect(readyTitles).toEqual(new Set(['实践概况', '公众号推文', '图文笔记', '视频']))
   })
 })
