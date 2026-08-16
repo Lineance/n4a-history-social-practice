@@ -7,3 +7,18 @@
   font-size: 11px;
   background: rgba(247, 241, 227, 0.7);
 }
+
+.tileHint {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--c-deep);
+  background: rgba(247, 241, 227, 0.94);
+  border: 1px solid var(--c-line);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}

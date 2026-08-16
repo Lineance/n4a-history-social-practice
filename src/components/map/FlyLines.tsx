@@ -50,11 +50,13 @@ function animateSegment(
 function FlyLines() {
   const { map, mapReady, periodKey } = useMapState()
   const cancelRef = useRef<(() => void) | null>(null)
+  const prevPeriod = useRef<string | null>(null)
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
     cancelRef.current?.()
-    if (!map || !mapReady || !visible) return
+    // 已有选定时期（如从 ?period= hash 进入）时不播全流程，避免与单段播放冲突
+    if (!map || !mapReady || !visible || periodKey) return
 
     const playFull = () => {
       setTrail(map, [])
@@ -72,13 +74,16 @@ function FlyLines() {
       next()
     }
 
-    // 进页自动播一遍完整迁移
     playFull()
     return () => cancelRef.current?.()
-  }, [map, mapReady, visible])
+  }, [map, mapReady, visible, periodKey])
+
+  // 重新显示时允许重放单段
+  useEffect(() => {
+    if (visible) prevPeriod.current = null
+  }, [visible])
 
   // 时期变化 → 播放对应单段
-  const prevPeriod = useRef<string | null>(null)
   useEffect(() => {
     if (!map || !mapReady || !periodKey || !visible) return
     if (prevPeriod.current === periodKey) return

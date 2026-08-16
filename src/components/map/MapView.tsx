@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   Map as MapLibreMap,
+  type ErrorEvent,
   type MapMouseEvent,
   type StyleSpecification,
 } from 'maplibre-gl'
@@ -48,6 +49,10 @@ function buildTiandituStyle(tk: string): StyleSpecification {
 
 const VENUE_COLOR = '#b03a2e'
 const VENUE_ACTIVE = '#c9a227'
+
+interface TileErrorEvent extends ErrorEvent {
+  sourceId?: string
+}
 
 function addSourcesAndLayers(map: MapLibreMap) {
   // 四省省界强调
@@ -112,6 +117,7 @@ function addSourcesAndLayers(map: MapLibreMap) {
 
 function MapView() {
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const [tileError, setTileError] = useState(false)
   const { periodKey, map, setMap, setMapReady, setHovered, setPeriod } = useMapState()
 
   useEffect(() => {
@@ -120,6 +126,7 @@ function MapView() {
     if (!tiandituTk && import.meta.env.DEV) {
       console.warn('[MapView] 未配置天地图 tk，底图不可用（本地用 .env.local，生产用 GitHub Secret TIANDITU_TK）')
     }
+    if (!tiandituTk) setTileError(true)
     const mapInstance = new MapLibreMap({
       container: el,
       style: buildTiandituStyle(tiandituTk),
@@ -128,6 +135,12 @@ function MapView() {
       attributionControl: { compact: true },
     })
     setMap(mapInstance)
+
+    const onError = (e: ErrorEvent) => {
+      const sourceId = (e as TileErrorEvent).sourceId
+      if (sourceId === 'tianditu-base' || sourceId === 'tianditu-label') setTileError(true)
+    }
+    mapInstance.on('error', onError)
 
     mapInstance.on('load', () => {
       addSourcesAndLayers(mapInstance)
@@ -158,6 +171,7 @@ function MapView() {
       mapInstance.remove()
       setMap(null)
       setMapReady(false)
+      setTileError(false)
     }
   }, [setMap, setMapReady, setHovered, setPeriod])
 
@@ -193,7 +207,16 @@ function MapView() {
     }
   }, [periodKey, map])
 
-  return <div ref={containerRef} className={styles.container} />
+  return (
+    <>
+      <div ref={containerRef} className={styles.container} />
+      {tileError && (
+        <div className={styles.tileHint} role="status">
+          地图底图加载失败：{tiandituTk ? '请检查网络或天地图 key 是否有效' : '未配置天地图 key（VITE_TIANDITU_TK）'}
+        </div>
+      )}
+    </>
+  )
 }
 
 export default MapView
