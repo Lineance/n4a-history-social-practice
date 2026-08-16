@@ -183,14 +183,15 @@ describe('content 数据完整性', () => {
     expect([...orders].sort((a, b) => a - b)).toEqual(orders)
   })
 
-  it('实践状态分布：7 线下 / 1 线上 / 5 敬请期待；梅园不入地图', () => {
+  it('实践状态分布：7 线下 / 1 线上 / 4 旧址无馆 / 1 后续实践；梅园不入地图', () => {
     const byStatus = venues.reduce<Record<string, number>>((acc, v) => {
       acc[v.visitStatus] = (acc[v.visitStatus] ?? 0) + 1
       return acc
     }, {})
     expect(byStatus.offline).toBe(7)
     expect(byStatus.online).toBe(1)
-    expect(byStatus.upcoming).toBe(5)
+    expect(byStatus.noVenue).toBe(4)
+    expect(byStatus.pending).toBe(1)
     const meiyuan = venues.find((v) => v.id === 'meiyuan')
     expect(meiyuan?.onMap).toBe(false)
     expect(venues.filter((v) => v.onMap !== false)).toHaveLength(12)

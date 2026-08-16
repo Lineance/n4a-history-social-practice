@@ -4,7 +4,8 @@ import styles from './VisitBadge.module.css'
 const LABEL: Record<VisitStatus, string> = {
   offline: '线下实践',
   online: '线上实践',
-  upcoming: '敬请期待',
+  noVenue: '旧址无馆',
+  pending: '后续实践',
 }
 
 function VisitBadge({

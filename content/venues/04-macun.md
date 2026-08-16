@@ -5,15 +5,15 @@ name: 新四军军部麻村旧址
 shortName: 麻村
 city: 安徽黄山（太平）
 coords:
-  lat: 30.28
-  lng: 118.14
+  lat: 30.35
+  lng: 118.22
 periodKey: macun
 dates:
   from: "1938-05-07"
   to: "1938-05-26"
-address: 安徽省黄山市黄山区（原太平县）麻村
+address: 安徽省黄山市黄山区仙源镇麻村
 spiritTags: [隐蔽集结, 就地整训, 东进蓄势]
-visitStatus: upcoming
+visitStatus: noVenue
 displayOrder: 4
 images: []
 ---

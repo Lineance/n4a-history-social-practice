@@ -28,8 +28,14 @@
   background: rgba(201, 162, 39, 0.12);
 }
 
-.upcoming {
+.noVenue {
   color: var(--c-text-light);
   border: 1px dashed rgba(107, 107, 107, 0.55);
   background: transparent;
+}
+
+.pending {
+  color: #6b5d4f;
+  border: 1px solid rgba(107, 107, 107, 0.45);
+  background: rgba(107, 107, 107, 0.1);
 }

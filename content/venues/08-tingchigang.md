@@ -11,7 +11,7 @@ periodKey: tingchigang
 dates:
   from: "1941-07"
   to: "1942-12-25"
-address: 江苏省盐城市阜宁县陈集镇停翅港村、羊寨镇单家港村
+address: 江苏省盐城市阜宁县陈集镇停翅港村
 spiritTags: [开拓创新, 百折不挠, 文化建设]
 website: http://www.n4a.org.cn/
 visitStatus: offline

@@ -29,10 +29,10 @@ export const PERIOD_KEYS: PeriodKey[] = [
   'meiyuan',
 ]
 
-/** 实践状态：线下 / 线上 / 敬请期待 */
-export type VisitStatus = 'offline' | 'online' | 'upcoming'
+/** 实践状态：线下 / 线上 / 旧址无馆 / 后续实践 */
+export type VisitStatus = 'offline' | 'online' | 'noVenue' | 'pending'
 
-export const VISIT_STATUSES: VisitStatus[] = ['offline', 'online', 'upcoming']
+export const VISIT_STATUSES: VisitStatus[] = ['offline', 'online', 'noVenue', 'pending']
 
 export interface Coords {
   lat: number

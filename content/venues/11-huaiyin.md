@@ -5,15 +5,15 @@ name: 新四军军部淮阴旧址（清江）
 shortName: 淮阴
 city: 江苏淮安
 coords:
-  lat: 33.63
-  lng: 119.03
+  lat: 33.59
+  lng: 119.02
 periodKey: huaiyin
 dates:
   from: "1945-09-21"
   to: "1945-10-28"
-address: 江苏省淮安市淮阴区（原淮阴城/清江市）
+address: 江苏省淮安市清江浦区西大街 116 号
 spiritTags: [向北发展, 向南防御, 战略转型]
-visitStatus: upcoming
+visitStatus: noVenue
 displayOrder: 11
 images: []
 ---

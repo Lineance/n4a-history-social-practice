@@ -5,13 +5,13 @@ name: 盐城新四军纪念馆
 shortName: 盐城
 city: 江苏盐城
 coords:
-  lat: 33.38894
-  lng: 120.15422
+  lat: 33.387
+  lng: 120.147
 periodKey: yancheng
 dates:
   from: "1941-01-20"
   to: "1941-07"
-address: 江苏省盐城市亭湖区建军东路 159 号
+address: 江苏省盐城市亭湖区建军西路 118 号
 spiritTags: [浴火重生, 逆境制胜, 华中人民的长城]
 website: http://www.n4a.org.cn/
 visitStatus: offline

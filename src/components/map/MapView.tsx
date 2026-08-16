@@ -79,9 +79,9 @@ function addSourcesAndLayers(map: MapLibreMap) {
     type: 'circle',
     source: 'venues',
     paint: {
-      'circle-color': ['case', ['==', ['get', 'visitStatus'], 'upcoming'], UPCOMING_COLOR, VENUE_COLOR],
+      'circle-color': ['match', ['get', 'visitStatus'], ['noVenue', 'pending'], UPCOMING_COLOR, VENUE_COLOR],
       'circle-radius': 7,
-      'circle-opacity': ['case', ['==', ['get', 'visitStatus'], 'upcoming'], 0.6, 0.85],
+      'circle-opacity': ['match', ['get', 'visitStatus'], ['noVenue', 'pending'], 0.6, 0.85],
       'circle-stroke-width': 2,
       'circle-stroke-color': '#f7f1e3',
     },
@@ -192,7 +192,7 @@ function MapView() {
         'case',
         ['==', ['get', 'periodKey'], periodKey],
         13,
-        ['==', ['get', 'visitStatus'], 'upcoming'],
+        ['match', ['get', 'visitStatus'], ['noVenue', 'pending'], true, false],
         7,
         6,
       ])
@@ -200,7 +200,7 @@ function MapView() {
         'case',
         ['==', ['get', 'periodKey'], periodKey],
         VENUE_ACTIVE,
-        ['==', ['get', 'visitStatus'], 'upcoming'],
+        ['match', ['get', 'visitStatus'], ['noVenue', 'pending'], true, false],
         UPCOMING_COLOR,
         VENUE_COLOR,
       ])
@@ -208,7 +208,7 @@ function MapView() {
         'case',
         ['==', ['get', 'periodKey'], periodKey],
         1,
-        ['==', ['get', 'visitStatus'], 'upcoming'],
+        ['match', ['get', 'visitStatus'], ['noVenue', 'pending'], true, false],
         0.6,
         0.4,
       ])

@@ -13,7 +13,7 @@ dates:
   to: "1945-09-19"
 address: 江苏省淮安市盱眙县旧铺镇千棵柳村千柳组（今名长江村）
 spiritTags: [战略反攻, 乘胜前进, 抗战胜利]
-visitStatus: upcoming
+visitStatus: noVenue
 displayOrder: 10
 images: []
 ---

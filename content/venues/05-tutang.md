@@ -11,9 +11,9 @@ periodKey: tutang
 dates:
   from: "1938-05-26"
   to: "1938-08-02"
-address: 安徽省芜湖市南陵县土塘村
+address: 安徽省芜湖市南陵县三里镇土塘村
 spiritTags: [整军经武, 东进前奏, 枕戈待旦]
-visitStatus: upcoming
+visitStatus: noVenue
 displayOrder: 5
 images: []
 ---

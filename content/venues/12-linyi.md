@@ -11,9 +11,9 @@ periodKey: linyi
 dates:
   from: "1945-12"
   to: "1947-02"
-address: 山东省临沂市河东区九曲街道前河湾村（初驻临沂城西天主教堂）
+address: 山东省临沂市兰山区兰山路 95-1 号（初驻）→ 河东区九曲街道前河湾村
 spiritTags: [华野诞生, 战略决战, 番号撤销]
-visitStatus: upcoming
+visitStatus: pending
 displayOrder: 12
 images:
   - src: /images/venues/linyi/cover.webp
