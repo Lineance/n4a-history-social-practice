@@ -1,0 +1,35 @@
+.badge {
+  display: inline-block;
+  font-family: var(--font-kai);
+  font-size: 12px;
+  letter-spacing: 2px;
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.compact {
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.offline {
+  color: #f7f1e3;
+  background: var(--c-seal);
+  transform: rotate(-3deg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.online {
+  color: var(--c-gold);
+  border: 1px solid var(--c-gold);
+  background: rgba(201, 162, 39, 0.12);
+}
+
+.upcoming {
+  color: var(--c-text-light);
+  border: 1px dashed rgba(107, 107, 107, 0.55);
+  background: transparent;
+}

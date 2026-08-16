@@ -7,6 +7,9 @@ import styles from './FlyLines.module.css'
 
 const SEGMENT_MS = 1100
 
+/** 飞线只走地图上打点的场馆（梅园等 onMap:false 不参与） */
+const MAP_VENUES = venues.filter((v) => v.onMap !== false)
+
 function source(map: Map, id: string): GeoJSONSource | undefined {
   return map.getSource(id) as GeoJSONSource | undefined
 }
@@ -62,12 +65,12 @@ function FlyLines() {
       setTrail(map, [])
       let i = 0
       const next = () => {
-        if (i >= venues.length - 1) {
-          setDot(map, [venues[venues.length - 1].coords.lng, venues[venues.length - 1].coords.lat])
+        if (i >= MAP_VENUES.length - 1) {
+          setDot(map, [MAP_VENUES[MAP_VENUES.length - 1].coords.lng, MAP_VENUES[MAP_VENUES.length - 1].coords.lat])
           return
         }
-        const a = [venues[i].coords.lng, venues[i].coords.lat] as [number, number]
-        const b = [venues[i + 1].coords.lng, venues[i + 1].coords.lat] as [number, number]
+        const a = [MAP_VENUES[i].coords.lng, MAP_VENUES[i].coords.lat] as [number, number]
+        const b = [MAP_VENUES[i + 1].coords.lng, MAP_VENUES[i + 1].coords.lat] as [number, number]
         i += 1
         cancelRef.current = animateSegment(map, a, b, SEGMENT_MS, next)
       }
@@ -88,16 +91,20 @@ function FlyLines() {
     if (!map || !mapReady || !periodKey || !visible) return
     if (prevPeriod.current === periodKey) return
     prevPeriod.current = periodKey
-    const idx = venues.findIndex((v) => v.periodKey === periodKey)
-    if (idx <= 0) {
+    const idx = MAP_VENUES.findIndex((v) => v.periodKey === periodKey)
+    if (idx < 0) {
       setTrail(map, [])
-      setDot(map, [venues[0].coords.lng, venues[0].coords.lat])
+      return
+    }
+    if (idx === 0) {
+      setTrail(map, [])
+      setDot(map, [MAP_VENUES[0].coords.lng, MAP_VENUES[0].coords.lat])
       return
     }
     cancelRef.current?.()
     setTrail(map, [])
-    const a = [venues[idx - 1].coords.lng, venues[idx - 1].coords.lat] as [number, number]
-    const b = [venues[idx].coords.lng, venues[idx].coords.lat] as [number, number]
+    const a = [MAP_VENUES[idx - 1].coords.lng, MAP_VENUES[idx - 1].coords.lat] as [number, number]
+    const b = [MAP_VENUES[idx].coords.lng, MAP_VENUES[idx].coords.lat] as [number, number]
     cancelRef.current = animateSegment(map, a, b, SEGMENT_MS, () => undefined)
     return () => cancelRef.current?.()
   }, [periodKey, map, mapReady, visible])

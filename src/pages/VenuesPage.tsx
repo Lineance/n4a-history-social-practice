@@ -7,7 +7,7 @@ function VenuesPage() {
     <div className="container">
       <header className={styles.head}>
         <h1 className={styles.title}>展馆介绍</h1>
-        <p className={styles.desc}>新四军军部驻地变迁 · 八个展馆的红色印记</p>
+        <p className={styles.desc}>新四军军部驻地变迁 · 十三个场馆的红色印记</p>
       </header>
       <div className={styles.grid}>
         {venues.map((v) => (

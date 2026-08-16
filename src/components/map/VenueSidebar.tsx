@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { timeline, venues } from '../../lib/content'
+import VisitBadge from '../venue/VisitBadge'
 import { useMapState } from '../../hooks/useMapState'
 import styles from './VenueSidebar.module.css'
 
@@ -43,7 +44,7 @@ function VenueSidebar() {
             >
               <span className={styles.itemName}>
                 {v.shortName}
-                {v.isFieldVisited && <span className={styles.badge}>实地</span>}
+                <VisitBadge status={v.visitStatus} compact />
               </span>
               <span className={styles.itemMeta}>{v.city}</span>
               <Link

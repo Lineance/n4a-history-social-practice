@@ -14,7 +14,7 @@ dates:
 address: 湖北省武汉市江岸区胜利街 332-352 号
 spiritTags: [举旗定向, 听党指挥, 政治智慧]
 website: https://www.whbb.org.cn/
-isFieldVisited: true
+visitStatus: offline
 displayOrder: 1
 images:
   - src: /images/venues/hankou/hankou-01.webp

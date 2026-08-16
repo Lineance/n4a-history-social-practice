@@ -30,7 +30,13 @@ export function buildArc(p0: [number, number], p1: [number, number], steps = 64)
 export function venuePoint(v: Venue): Feature {
   return {
     type: 'Feature',
-    properties: { id: v.id, periodKey: v.periodKey, name: v.name, shortName: v.shortName },
+    properties: {
+      id: v.id,
+      periodKey: v.periodKey,
+      visitStatus: v.visitStatus,
+      name: v.name,
+      shortName: v.shortName,
+    },
     geometry: { type: 'Point', coordinates: [v.coords.lng, v.coords.lat] },
   }
 }

@@ -14,8 +14,8 @@ dates:
 address: 安徽省宣城市泾县云岭镇罗里村
 spiritTags: [军民一致, 英勇作战, 不怕牺牲]
 website: https://www.ahjx.gov.cn/Travel/show/1669921.html
-isFieldVisited: true
-displayOrder: 4
+visitStatus: offline
+displayOrder: 6
 images:
   - src: /images/venues/yunling/yunling-01.webp
     caption: 云岭军部旧址外景

@@ -14,7 +14,7 @@ dates:
 address: 江西省南昌市西湖区象山南路 119 号
 spiritTags: [铁的纪律, 军民团结, 十条军规]
 website: https://www.ncn4a.cn/
-isFieldVisited: true
+visitStatus: offline
 displayOrder: 2
 images:
   - src: /images/venues/nanchang/nanchang-01.webp

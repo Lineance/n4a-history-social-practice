@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getEvents, getVenue, timeline } from '../lib/content'
+import VisitBadge from '../components/venue/VisitBadge'
 import GalleryLightbox from '../components/common/Lightbox'
 import styles from './VenueDetailPage.module.css'
 
@@ -43,7 +44,7 @@ function VenueDetailPage() {
         <div className={styles.headerBody}>
           <div className={styles.titleRow}>
             <h1 className={styles.name}>{venue.name}</h1>
-            {venue.isFieldVisited && <span className={styles.seal}>实地调研</span>}
+            <VisitBadge status={venue.visitStatus} />
           </div>
           <p className={styles.meta}>
             {venue.city} · {venue.dates.from} ~ {venue.dates.to}
@@ -100,9 +101,9 @@ function VenueDetailPage() {
         </div>
       </section>
 
-      {venue.isFieldVisited && gallery.length > 0 && (
+      {gallery.length > 0 && (
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>实地照片</h2>
+          <h2 className={styles.sectionTitle}>照片图集</h2>
           <div className={styles.gallery}>
             {gallery.map((img, i) => (
               <button

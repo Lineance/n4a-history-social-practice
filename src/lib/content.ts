@@ -10,8 +10,9 @@ import type {
   Venue,
   VenueImage,
   VisitRecord,
+  VisitStatus,
 } from '../types/content'
-import { ACHIEVEMENT_PLATFORMS, PERIOD_KEYS } from '../types/content'
+import { ACHIEVEMENT_PLATFORMS, PERIOD_KEYS, VISIT_STATUSES } from '../types/content'
 
 /* ------------------------------------------------------------------ */
 /* 加载 content/ 下的 Markdown（构建期打包，见 技术方案.md §4.1）        */
@@ -120,6 +121,14 @@ function requirePlatform(v: unknown, file: string): AchievementPlatform {
   return p as AchievementPlatform
 }
 
+function requireVisitStatus(v: unknown, file: string): VisitStatus {
+  const s = requireString(v, 'visitStatus', file)
+  if (!VISIT_STATUSES.includes(s as VisitStatus)) {
+    throw new Error(`${file}: 非法 visitStatus "${s}"`)
+  }
+  return s as VisitStatus
+}
+
 /** 可选字符串，但保留空串（用于 douyin 的"待发布"标记） */
 function optionalStringKeepEmpty(v: unknown, file: string): string | undefined {
   if (v === undefined) return undefined
@@ -149,7 +158,7 @@ export function parseVenue(raw: string, file: string): Venue {
     : []
   const coords = data.coords as Record<string, unknown> | undefined
   const dates = data.dates as Record<string, unknown> | undefined
-  return {
+  const venue: Venue = {
     id: requireString(data.id, 'id', file),
     cover: assetUrl(requireString(data.cover, 'cover', file)),
     name: requireString(data.name, 'name', file),
@@ -167,11 +176,16 @@ export function parseVenue(raw: string, file: string): Venue {
     address: requireString(data.address, 'address', file),
     spiritTags: requireStringArray(data.spiritTags, 'spiritTags', file),
     website: optionalString(data.website, file),
-    isFieldVisited: requireBoolean(data.isFieldVisited, 'isFieldVisited', file),
+    visitStatus: requireVisitStatus(data.visitStatus, file),
     displayOrder: requireNumber(data.displayOrder, 'displayOrder', file),
     images,
     intro: content.trim(),
   }
+  const onMap = data.onMap
+  if (onMap !== undefined) {
+    venue.onMap = requireBoolean(onMap, 'onMap', file)
+  }
+  return venue
 }
 
 export function parseTimelinePeriod(raw: string, file: string): TimelinePeriod {

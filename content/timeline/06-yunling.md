@@ -1,7 +1,7 @@
 ---
 key: yunling
 title: 云岭时期
-subtitle: 发展壮大与浴血重生
+subtitle: 皖南浴血
 dates:
   from: "1938-08-02"
   to: "1941-01-14"

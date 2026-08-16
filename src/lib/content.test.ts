@@ -35,7 +35,7 @@ dates:
 address: 测试路 1 号
 spiritTags: [铁军]
 website: https://example.com
-isFieldVisited: true
+visitStatus: offline
 displayOrder: 1
 images:
   - src: /images/venues/test/01.webp
@@ -64,6 +64,18 @@ describe('content 解析层', () => {
   it('非法 periodKey 抛错', () => {
     const bad = validVenueRaw().replace('periodKey: hankou', 'periodKey: unknown')
     expect(() => parseVenue(bad, 'test.md')).toThrow()
+  })
+
+  it('非法 visitStatus 抛错', () => {
+    const bad = validVenueRaw().replace('visitStatus: offline', 'visitStatus: unknown')
+    expect(() => parseVenue(bad, 'test.md')).toThrow()
+  })
+
+  it('onMap 缺省为 true，可显式 false', () => {
+    const v = parseVenue(validVenueRaw(), 'test.md')
+    expect(v.onMap).toBeUndefined()
+    const noMap = validVenueRaw().replace('visitStatus: offline', 'visitStatus: offline\nonMap: false')
+    expect(parseVenue(noMap, 'test.md').onMap).toBe(false)
   })
 
   it('事件按 "## 日期 · 标题" 切分', () => {
@@ -157,10 +169,10 @@ sections:
 })
 
 describe('content 数据完整性', () => {
-  it('数量正确：venues=8, timeline=8, events=8, visits=4', () => {
-    expect(venues).toHaveLength(8)
-    expect(timeline).toHaveLength(8)
-    expect(Object.keys(eventsByVenue)).toHaveLength(8)
+  it('数量正确：venues=13, timeline=13, events=13, visits=4', () => {
+    expect(venues).toHaveLength(13)
+    expect(timeline).toHaveLength(13)
+    expect(Object.keys(eventsByVenue)).toHaveLength(13)
     expect(visits).toHaveLength(4)
   })
 
@@ -169,6 +181,19 @@ describe('content 数据完整性', () => {
     expect(new Set(ids).size).toBe(ids.length)
     const orders = venues.map((v) => v.displayOrder)
     expect([...orders].sort((a, b) => a - b)).toEqual(orders)
+  })
+
+  it('实践状态分布：7 线下 / 1 线上 / 5 敬请期待；梅园不入地图', () => {
+    const byStatus = venues.reduce<Record<string, number>>((acc, v) => {
+      acc[v.visitStatus] = (acc[v.visitStatus] ?? 0) + 1
+      return acc
+    }, {})
+    expect(byStatus.offline).toBe(7)
+    expect(byStatus.online).toBe(1)
+    expect(byStatus.upcoming).toBe(5)
+    const meiyuan = venues.find((v) => v.id === 'meiyuan')
+    expect(meiyuan?.onMap).toBe(false)
+    expect(venues.filter((v) => v.onMap !== false)).toHaveLength(12)
   })
 
   it('event.venueId 指向存在场馆，且字段非空', () => {
@@ -185,8 +210,8 @@ describe('content 数据完整性', () => {
     }
   })
 
-  it('visit.venueId 为实地调研场馆，且图片存在', () => {
-    const visited = new Set(venues.filter((v) => v.isFieldVisited).map((v) => v.id))
+  it('visit.venueId 为线下实践场馆，且图片存在', () => {
+    const visited = new Set(venues.filter((v) => v.visitStatus === 'offline').map((v) => v.id))
     for (const v of visits) {
       expect(visited.has(v.venueId)).toBe(true)
       for (const img of v.images) {

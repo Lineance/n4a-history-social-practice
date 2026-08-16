@@ -14,7 +14,7 @@ dates:
 address: 安徽省黄山市徽州区滨河南路 39 号
 spiritTags: [服从大局, 听令而行, 东进序曲]
 website: https://www.huangshan.gov.cn/zwgk/public/6615714/11368017.html
-isFieldVisited: true
+visitStatus: offline
 displayOrder: 3
 images:
   - src: /images/venues/yansi/yansi-01.webp

@@ -14,8 +14,8 @@ dates:
 address: 江苏省盐城市亭湖区建军东路 159 号
 spiritTags: [浴火重生, 逆境制胜, 华中人民的长城]
 website: http://www.n4a.org.cn/
-isFieldVisited: false
-displayOrder: 5
+visitStatus: offline
+displayOrder: 7
 images: []
 ---
 盐城新四军纪念馆位于盐城市亭湖区建军东路 159 号，是国内展示新四军抗战史最为系统全面的专题纪念馆。皖南事变爆发后，新四军于盐城重建军部，盐城自此成为华中抗日根据地的核心指挥中枢。

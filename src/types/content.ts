@@ -2,22 +2,37 @@ export type PeriodKey =
   | 'hankou'
   | 'nanchang'
   | 'yansi'
+  | 'macun'
+  | 'tutang'
   | 'yunling'
   | 'yancheng'
   | 'tingchigang'
   | 'huanghuatang'
+  | 'qiangeliou'
+  | 'huaiyin'
+  | 'linyi'
   | 'meiyuan'
 
 export const PERIOD_KEYS: PeriodKey[] = [
   'hankou',
   'nanchang',
   'yansi',
+  'macun',
+  'tutang',
   'yunling',
   'yancheng',
   'tingchigang',
   'huanghuatang',
+  'qiangeliou',
+  'huaiyin',
+  'linyi',
   'meiyuan',
 ]
+
+/** 实践状态：线下 / 线上 / 敬请期待 */
+export type VisitStatus = 'offline' | 'online' | 'upcoming'
+
+export const VISIT_STATUSES: VisitStatus[] = ['offline', 'online', 'upcoming']
 
 export interface Coords {
   lat: number
@@ -49,7 +64,9 @@ export interface Venue {
   address: string
   spiritTags: string[]
   website?: string
-  isFieldVisited: boolean
+  visitStatus: VisitStatus
+  /** 是否在地图上打点（梅园等政治延续阶段可为 false） */
+  onMap?: boolean
   displayOrder: number
   images: VenueImage[]
   intro: string

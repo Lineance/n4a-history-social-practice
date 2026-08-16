@@ -49,6 +49,7 @@ function buildTiandituStyle(tk: string): StyleSpecification {
 
 const VENUE_COLOR = '#b03a2e'
 const VENUE_ACTIVE = '#c9a227'
+const UPCOMING_COLOR = '#9a9488'
 
 interface TileErrorEvent extends ErrorEvent {
   sourceId?: string
@@ -70,16 +71,17 @@ function addSourcesAndLayers(map: MapLibreMap) {
     paint: { 'line-color': '#7b241c', 'line-opacity': 0.5, 'line-width': 1.5 },
   })
 
-  // 场馆标记
-  map.addSource('venues', { type: 'geojson', data: venuesFeatureCollection(venues) })
+  // 场馆标记（未实践区域用灰色描边样式）
+  const onMapVenues = venues.filter((v) => v.onMap !== false)
+  map.addSource('venues', { type: 'geojson', data: venuesFeatureCollection(onMapVenues) })
   map.addLayer({
     id: 'venues-circle',
     type: 'circle',
     source: 'venues',
     paint: {
-      'circle-color': VENUE_COLOR,
+      'circle-color': ['case', ['==', ['get', 'visitStatus'], 'upcoming'], UPCOMING_COLOR, VENUE_COLOR],
       'circle-radius': 7,
-      'circle-opacity': 0.85,
+      'circle-opacity': ['case', ['==', ['get', 'visitStatus'], 'upcoming'], 0.6, 0.85],
       'circle-stroke-width': 2,
       'circle-stroke-color': '#f7f1e3',
     },
@@ -190,18 +192,24 @@ function MapView() {
         'case',
         ['==', ['get', 'periodKey'], periodKey],
         13,
+        ['==', ['get', 'visitStatus'], 'upcoming'],
+        7,
         6,
       ])
       map.setPaintProperty('venues-circle', 'circle-color', [
         'case',
         ['==', ['get', 'periodKey'], periodKey],
         VENUE_ACTIVE,
+        ['==', ['get', 'visitStatus'], 'upcoming'],
+        UPCOMING_COLOR,
         VENUE_COLOR,
       ])
       map.setPaintProperty('venues-circle', 'circle-opacity', [
         'case',
         ['==', ['get', 'periodKey'], periodKey],
         1,
+        ['==', ['get', 'visitStatus'], 'upcoming'],
+        0.6,
         0.4,
       ])
     }

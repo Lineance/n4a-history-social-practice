@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { getVenue } from '../../lib/content'
+import VisitBadge from '../venue/VisitBadge'
 import { useMapState } from '../../hooks/useMapState'
 import styles from './InfoCard.module.css'
 
@@ -21,7 +22,10 @@ function InfoCard() {
     <div className={styles.card} style={{ left, top, width: CARD_W }}>
       <img src={venue.cover} alt={venue.name} className={styles.cover} loading="lazy" />
       <div className={styles.body}>
-        <h3 className={styles.name}>{venue.name}</h3>
+        <h3 className={styles.name}>
+          {venue.name}
+          <VisitBadge status={venue.visitStatus} compact />
+        </h3>
         <p className={styles.meta}>
           {venue.city} · {venue.dates.from} ~ {venue.dates.to}
         </p>

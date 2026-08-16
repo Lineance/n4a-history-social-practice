@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { Venue } from '../../types/content'
 import { timeline } from '../../lib/content'
+import VisitBadge from './VisitBadge'
 import styles from './VenueCard.module.css'
 
 function VenueCard({ venue }: { venue: Venue }) {
@@ -10,7 +11,7 @@ function VenueCard({ venue }: { venue: Venue }) {
     <Link to={`/venues/${venue.id}`} className={styles.card}>
       <div className={styles.coverWrap}>
         <img src={venue.cover} alt={venue.name} className={styles.cover} loading="lazy" />
-        {venue.isFieldVisited && <span className={styles.seal}>实地调研</span>}
+        <VisitBadge status={venue.visitStatus} className={styles.seal} />
       </div>
       <div className={styles.body}>
         <h3 className={styles.name}>{venue.name}</h3>
