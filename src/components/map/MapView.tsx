@@ -148,6 +148,18 @@ function MapView() {
       addSourcesAndLayers(mapInstance)
       setMapReady(true)
 
+      // 初始视野：居中框住全部地图上的场馆（梅园除外）
+      const onMapVenues = venues.filter((v) => v.onMap !== false)
+      const lngs = onMapVenues.map((v) => v.coords.lng)
+      const lats = onMapVenues.map((v) => v.coords.lat)
+      mapInstance.fitBounds(
+        [
+          [Math.min(...lngs), Math.min(...lats)],
+          [Math.max(...lngs), Math.max(...lats)],
+        ],
+        { padding: 60, maxZoom: 9 },
+      )
+
       const onMove = (e: MapMouseEvent) => {
         const feats = mapInstance.queryRenderedFeatures(e.point, { layers: ['venues-circle'] })
         const id = feats[0]?.properties?.id as string | undefined
