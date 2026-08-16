@@ -1,0 +1,1 @@
+import{d as e,u as t}from"./index-gY-hxiAZ.js";var n=t();function r(){return(0,n.jsxs)(`section`,{style:{textAlign:`center`,padding:`100px 0`},children:[(0,n.jsx)(`h1`,{children:`404`}),(0,n.jsx)(`p`,{children:`页面不存在。`}),(0,n.jsx)(e,{to:`/`,children:`返回首页`})]})}export{r as default};
