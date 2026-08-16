@@ -41,7 +41,18 @@ function buildTiandituStyle(tk: string): StyleSpecification {
     },
     layers: [
       { id: 'bg', type: 'background', paint: { 'background-color': '#efe9dc' } },
-      { id: 'tianditu-base', type: 'raster', source: 'tianditu-base', minzoom: 0, maxzoom: 18 },
+      {
+        id: 'tianditu-base',
+        type: 'raster',
+        source: 'tianditu-base',
+        minzoom: 0,
+        maxzoom: 18,
+        paint: {
+          'raster-saturation': -0.55,
+          'raster-brightness-min': 0.12,
+          'raster-brightness-max': 0.96,
+        },
+      },
       { id: 'tianditu-label', type: 'raster', source: 'tianditu-label', minzoom: 2, maxzoom: 18 },
     ],
   }
@@ -55,7 +66,36 @@ interface TileErrorEvent extends ErrorEvent {
   sourceId?: string
 }
 
+/** 生成金色方向箭头图标（canvas → RGBA，加进地图 symbol 用） */
+function createRouteArrowIcon(map: MapLibreMap) {
+  const size = 24
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+  ctx.clearRect(0, 0, size, size)
+  // 右向箭头（symbol-placement: line 会沿路线方向旋转）；深红填充 + 米白描边，避免与黄色底图混叠
+  ctx.fillStyle = '#7b241c'
+  ctx.strokeStyle = '#f7f1e3'
+  ctx.lineWidth = 1.5
+  ctx.beginPath()
+  ctx.rect(3, 9, 11, 6)
+  ctx.fill()
+  ctx.stroke()
+  ctx.beginPath()
+  ctx.moveTo(12, 3)
+  ctx.lineTo(22, 12)
+  ctx.lineTo(12, 21)
+  ctx.closePath()
+  ctx.fill()
+  ctx.stroke()
+  const img = ctx.getImageData(0, 0, size, size)
+  map.addImage('route-arrow', { width: size, height: size, data: img.data })
+}
+
 function addSourcesAndLayers(map: MapLibreMap) {
+  createRouteArrowIcon(map)
   // 四省省界强调
   map.addSource('provinces', { type: 'geojson', data: provinces as unknown as FeatureCollection })
   map.addLayer({
@@ -87,18 +127,41 @@ function addSourcesAndLayers(map: MapLibreMap) {
     },
   })
 
-  // 飞线动画图层（轨迹 + 光点）
+  // 飞线图层：持久基线路（完整迁移路线，常显）+ 动画高亮线 + 光点
+  map.addSource('fly-route', { type: 'geojson', data: emptyLineCollection() })
+  map.addLayer({
+    id: 'fly-route',
+    type: 'line',
+    source: 'fly-route',
+    layout: { 'line-cap': 'round', 'line-join': 'round' },
+    paint: {
+      'line-color': '#7b241c',
+      'line-width': 1.5,
+      'line-opacity': 0.45,
+      'line-dasharray': [3, 2],
+    },
+  })
   map.addSource('fly-trail', { type: 'geojson', data: emptyLineCollection() })
   map.addLayer({
     id: 'fly-trail',
     type: 'line',
     source: 'fly-trail',
     layout: { 'line-cap': 'round', 'line-join': 'round' },
-    paint: {
-      'line-color': '#c9a227',
-      'line-width': 2.5,
-      'line-opacity': 0.85,
+    paint: { 'line-color': '#b03a2e', 'line-width': 2.5, 'line-opacity': 0.9 },
+  })
+  map.addLayer({
+    id: 'fly-route-arrow',
+    type: 'symbol',
+    source: 'fly-route',
+    layout: {
+      'symbol-placement': 'line',
+      'symbol-spacing': 110,
+      'icon-image': 'route-arrow',
+      'icon-size': 0.7,
+      'icon-rotation-alignment': 'map',
+      'icon-allow-overlap': false,
     },
+    paint: { 'icon-opacity': 0.85 },
   })
   map.addSource('fly-dot', {
     type: 'geojson',

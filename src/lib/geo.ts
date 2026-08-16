@@ -27,6 +27,16 @@ export function buildArc(p0: [number, number], p1: [number, number], steps = 64)
   return pts
 }
 
+/** 多段弧线首尾相接，合成一条完整路线点列（每段去掉重复的起点） */
+export function buildRoute(segments: [number, number][][]): [number, number][] {
+  const pts: [number, number][] = []
+  segments.forEach((arc, i) => {
+    if (i === 0) pts.push(...arc)
+    else pts.push(...arc.slice(1))
+  })
+  return pts
+}
+
 export function venuePoint(v: Venue): Feature {
   return {
     type: 'Feature',
