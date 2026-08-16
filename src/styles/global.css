@@ -46,7 +46,7 @@ img {
   width: 100%;
   max-width: var(--content-w);
   margin: 0 auto;
-  padding: 0 var(--gap);
+  padding: 0 var(--gap) 56px;
 }
 
 /* 页面主体留出导航栏高度 */
