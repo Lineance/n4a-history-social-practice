@@ -41,5 +41,8 @@ coverage
 队旗.svg
 队徽.svg
 
+# 小红书源图（已压缩转 WebP 存 public/images/achievements/，源图不入 git）
+*来自小红书网页版*.jpg
+
 # 归档包（不入 git）
 *.zip

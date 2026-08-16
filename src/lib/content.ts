@@ -2,6 +2,7 @@ import { parse as parseYaml } from 'yaml'
 import { assetUrl } from './assets'
 import type {
   AchievementLink,
+  AchievementPlatform,
   AchievementSection,
   HistoricalEvent,
   PeriodKey,
@@ -10,7 +11,7 @@ import type {
   VenueImage,
   VisitRecord,
 } from '../types/content'
-import { PERIOD_KEYS } from '../types/content'
+import { ACHIEVEMENT_PLATFORMS, PERIOD_KEYS } from '../types/content'
 
 /* ------------------------------------------------------------------ */
 /* 加载 content/ 下的 Markdown（构建期打包，见 技术方案.md §4.1）        */
@@ -109,6 +110,28 @@ function requirePeriodKey(v: unknown, file: string): PeriodKey {
     throw new Error(`${file}: 非法 periodKey "${key}"`)
   }
   return key as PeriodKey
+}
+
+function requirePlatform(v: unknown, file: string): AchievementPlatform {
+  const p = requireString(v, 'platform', file)
+  if (!ACHIEVEMENT_PLATFORMS.includes(p as AchievementPlatform)) {
+    throw new Error(`${file}: 非法 platform "${p}"`)
+  }
+  return p as AchievementPlatform
+}
+
+/** 可选字符串，但保留空串（用于 douyin 的"待发布"标记） */
+function optionalStringKeepEmpty(v: unknown, file: string): string | undefined {
+  if (v === undefined) return undefined
+  if (typeof v !== 'string') {
+    throw new Error(`${file}: 可选字符串字段类型错误`)
+  }
+  return v
+}
+
+/** 本地路径加 base 前缀；外链 URL 原样保留 */
+function resolveImage(v: string): string {
+  return /^https?:\/\//.test(v) ? v : assetUrl(v)
 }
 
 /* ------------------------------------------------------------------ */
@@ -215,9 +238,12 @@ export function parseAchievements(raw: string, file: string): AchievementSection
       const link: AchievementLink = {
         title: requireString(l.title, `${linkPrefix}.title`, file),
         url: requireString(l.url, `${linkPrefix}.url`, file),
+        platform: requirePlatform(l.platform, file),
       }
-      const source = optionalString(l.source, file)
-      if (source !== undefined) link.source = source
+      const image = optionalString(l.image, file)
+      if (image !== undefined) link.image = resolveImage(image)
+      const douyin = optionalStringKeepEmpty(l.douyin, file)
+      if (douyin !== undefined) link.douyin = douyin
       return link
     }) : []
     return {

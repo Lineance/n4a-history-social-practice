@@ -1,0 +1,115 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+}
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--c-gold);
+  box-shadow: 0 12px 28px rgba(90, 26, 20, 0.18);
+}
+.card:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 2px;
+}
+
+.coverWrap {
+  position: relative;
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #e9dfc8;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(201, 162, 39, 0.22), transparent 55%),
+    linear-gradient(135deg, #7b241c, #b03a2e);
+}
+
+.placeholderMark {
+  font-family: var(--font-kai);
+  font-size: 20px;
+  letter-spacing: 6px;
+  color: #f7f1e3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.title {
+  margin: 0;
+  padding: 12px 14px 0;
+  flex: 1;
+  font-family: var(--font-title);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--c-deep);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px 14px;
+}
+
+.action {
+  flex: 1;
+  padding: 7px 0;
+  text-align: center;
+  font-size: 13px;
+  font-family: var(--font-title);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.actionPrimary {
+  color: #f7f1e3;
+  background: var(--c-primary);
+}
+.actionPrimary:hover {
+  background: var(--c-deep);
+}
+
+.actionSecondary {
+  color: var(--c-deep);
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+}
+.actionSecondary:hover {
+  border-color: var(--c-primary);
+}
+
+.actionDisabled {
+  color: var(--c-text-light);
+  background: transparent;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+.actionDisabled:hover {
+  border-color: var(--c-line);
+}
+
+.footer {
+  padding: 12px 14px 14px;
+}
+
+.more {
+  font-size: 13px;
+  font-family: var(--font-kai);
+  color: var(--c-primary);
+}

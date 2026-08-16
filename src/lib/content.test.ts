@@ -98,17 +98,19 @@ describe('content 解析层', () => {
     expect(v.id).toBe('x')
   })
 
-  it('achievements 解析出分区与链接', () => {
+  it('achievements 解析出分区与媒体链接', () => {
     const secs = parseAchievements(
       `---
 sections:
-  - title: 实践记录
-    desc: 调研图文
+  - title: 视频
+    desc: 纪实视频
     ready: true
     links:
-      - title: 从汉口到南昌
-        url: https://example.com/a
-        source: 微信公众号
+      - title: 踏四省红色热土
+        platform: bilibili
+        image: /images/achievements/bili-01.webp
+        url: https://www.bilibili.com/video/BVxxx/
+        douyin: ''
   - title: 调研报告
     desc: 整理中
     ready: false
@@ -116,22 +118,39 @@ sections:
       'a.md',
     )
     expect(secs).toHaveLength(2)
-    expect(secs[0].title).toBe('实践记录')
+    expect(secs[0].title).toBe('视频')
     expect(secs[0].links).toHaveLength(1)
-    expect(secs[0].links[0].title).toBe('从汉口到南昌')
-    expect(secs[0].links[0].source).toBe('微信公众号')
+    expect(secs[0].links[0].title).toBe('踏四省红色热土')
+    expect(secs[0].links[0].platform).toBe('bilibili')
+    expect(secs[0].links[0].image).toBe('/images/achievements/bili-01.webp')
+    expect(secs[0].links[0].douyin).toBe('')
     expect(secs[1].ready).toBe(false)
     expect(secs[1].links).toHaveLength(0)
+  })
+
+  it('achievements 非法 platform 抛错', () => {
+    const bad = `---
+sections:
+  - title: 视频
+    desc: 纪实视频
+    ready: true
+    links:
+      - title: 示例
+        platform: tiktok
+        url: https://example.com
+---\n`
+    expect(() => parseAchievements(bad, 'a.md')).toThrow()
   })
 
   it('achievements 链接缺 url 抛错', () => {
     const bad = `---
 sections:
-  - title: 实践记录
-    desc: 调研图文
+  - title: 视频
+    desc: 纪实视频
     ready: true
     links:
       - title: 缺 url
+        platform: bilibili
 ---\n`
     expect(() => parseAchievements(bad, 'a.md')).toThrow()
   })
@@ -213,7 +232,7 @@ describe('content 数据完整性', () => {
     }
   })
 
-  it('成果页分区存在，媒体链接为 https 外链', () => {
+  it('成果页分区存在，媒体链接合法且封面文件存在', () => {
     expect(achievements.length).toBeGreaterThan(0)
     for (const s of achievements) {
       expect(s.title.length).toBeGreaterThan(0)
@@ -221,9 +240,15 @@ describe('content 数据完整性', () => {
       for (const link of s.links) {
         expect(link.title.length).toBeGreaterThan(0)
         expect(link.url.startsWith('https://')).toBe(true)
+        if (link.image) {
+          expect(
+            existsSync(path.join(root, 'public', link.image.replace(/^\//, ''))),
+            `${link.image} 不存在`,
+          ).toBe(true)
+        }
       }
     }
     const readyTitles = new Set(achievements.filter((s) => s.ready).map((s) => s.title))
-    expect(readyTitles).toEqual(new Set(['实践概况', '公众号推文', '图文笔记', '视频']))
+    expect(readyTitles).toEqual(new Set(['公众号推文', '图文笔记', '视频']))
   })
 })

@@ -83,10 +83,22 @@ export interface VisitRecord {
   notes: string
 }
 
+export type AchievementPlatform = 'wechat' | 'xiaohongshu' | 'bilibili' | 'douyin'
+
+export const ACHIEVEMENT_PLATFORMS: AchievementPlatform[] = [
+  'wechat',
+  'xiaohongshu',
+  'bilibili',
+  'douyin',
+]
+
 export interface AchievementLink {
   title: string
   url: string
-  source?: string
+  platform: AchievementPlatform
+  image?: string
+  /** 视频第二平台（抖音）链接；空字符串表示待发布 */
+  douyin?: string
 }
 
 export interface AchievementSection {

@@ -1,4 +1,5 @@
 import { achievements } from '../lib/content'
+import MediaCard from '../components/achievements/MediaCard'
 import styles from './AchievementsPage.module.css'
 
 function AchievementsPage() {
@@ -12,21 +13,19 @@ function AchievementsPage() {
       <div className={styles.list}>
         {achievements.map((s) => (
           <section key={s.title} className={styles.card}>
-            <h2 className={styles.cardTitle}>{s.title}</h2>
-            <p className={styles.cardDesc}>{s.desc}</p>
-            {s.links.length > 0 && (
-              <ul className={styles.links}>
+            <div className={styles.cardHead}>
+              <h2 className={styles.cardTitle}>{s.title}</h2>
+              <p className={styles.cardDesc}>{s.desc}</p>
+            </div>
+            {s.links.length > 0 ? (
+              <div className={styles.grid}>
                 {s.links.map((link) => (
-                  <li key={link.url}>
-                    <a className={styles.link} href={link.url} target="_blank" rel="noreferrer">
-                      <span className={styles.linkTitle}>{link.title}</span>
-                      {link.source && <span className={styles.linkSource}>{link.source}</span>}
-                    </a>
-                  </li>
+                  <MediaCard key={link.url} item={link} />
                 ))}
-              </ul>
+              </div>
+            ) : (
+              !s.ready && <div className={styles.placeholder}>内容整理中…</div>
             )}
-            {!s.ready && <div className={styles.placeholder}>内容整理中…</div>}
           </section>
         ))}
       </div>
